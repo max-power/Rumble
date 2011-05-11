@@ -1,77 +1,233 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8'>
+  <meta charset="utf-8">
+  <title>Rumble</title>
+  <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script-->
+  <script src="zepto.min.js" type="text/javascript"></script>
+  <script src="rumble.min.js" type="text/javascript"></script>
+  <style type="text/css" media="screen">
+  section,header,nav { display:block; margin:0;padding:0;}
+  body, ul, li { margin: 0; padding: 0; list-style:none;}
+  body {
+    width: 800px;
+    margin: 0 auto;
+    font: 16px/1.5 Helvetica, Arial, sans-serif;
+  }
+  h1,h2 {
+    background: #0CF;
+    color: #fff;
+    text-shadow: 0 2px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0px 2px #fff, 0px 6px #09F;
+    -webkit-transform: translate(-6px);
+  }
+  h3 { border-bottom: 1px dotted #ccc; color: #323232;}
+  h1,h2,h3,p {padding: 10px; margin: 10px 0;}
+  section section p { padding: 0 10px;}
+  .note {background-color: #ffc; padding: 10px;}
+  pre {
+    background: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    font: 12px/1.25 Inconsolata, Courier, monospace;
+    color: #606060;
+    margin: 0;
+    padding:5px 10px;
+    overflow:hidden;
+  }
 
-  <title>max-power/Rumble @ GitHub</title>
+  ul { width: 100%; display: -webkit-box; }
+  li { -webkit-box-flex: 1; margin: 10px; position:relative;}
+  .box {
+    display: block;
+    font: 36px/130px Helvetica, Arial, sans-serif;
+    width: 130px;
+    height: 130px;
+    background: #F36;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    position:relative;
+  }
+  .box:hover {
+    background: #F58;
+     z-index: 100;
+  }
+  section section { margin: 24px 0 48px 0;}
+  #examples { padding-bottom: 100px;}
+  
+  #special1 { -webkit-transform: translateX(20px) scale(0.5); }
+  #special2 { -webkit-transform: rotate(-190deg); }
+  #special3 { -webkit-transform: translate(-10px, 50px) rotate(2deg) scale(1.2); }
+  #special4 { -webkit-transform: rotate(90.1deg); }
+  #special3:hover { -webkit-animation: special3 1.5s alternate infinite; position:absolute; }
+  
+  @-webkit-keyframes special3 {
+    0% { width: 130px; height: 130px; left: 0; }
+    50% { width: 330px; height: 100px; line-height: 100px; left: -120px;}
+    100% { width: 200px; height: 130px; left: 0; }
+  }
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #6ef293;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #910d6c; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #910d6c; }
-    h3 { text-align: center; color: #910d6c; }
-    a { color: #910d6c; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
+
+
+  header {position:fixed; width: 250px;}
+  #content {width: 600px;margin-left: 280px;}
+  nav ul {
+    display:block;
+  }
+  nav li a {
+    display:block;
+    color: #fff;
+    padding: 5px 10px;
+    text-align:center;
+    text-decoration:none;
+    background: #F36;
+  }
+  nav li a:hover {
+    background: #F58;
+  }
   </style>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#range1').rumble({x:2,y:2,a:1});
+    $('#range2').rumble({x:10,y:10,a:4});
+    $('#range3').rumble({x:4,y:0,a:0});
+    $('#range4').rumble({x:0,y:0,a:5});
+    
+    $('#speed1').rumble({speed: 0});
+    $('#speed2').rumble({speed: 50});
+    $('#speed3').rumble({speed: 100});
+    $('#speed4').rumble({speed: 200});
+    
+    $('#event1').rumble({on: 'hover'});
+    $('#event2').rumble({on: 'hold'});
+    $('#event3').rumble({on: 'toggle'});
+    $('#event4').rumble({on: 'constant'});
+    
+    $('.special').rumble({x:10, y:10, a: 7});
+    
+    $('nav li').rumble();
+  })  
+  </script>
 </head>
-
 <body>
-  <a href="http://github.com/max-power/Rumble"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
-  <div id="container">
+  <header>
+    <h1>Rumble</h1>
+    <p>Inspired by <a href="http://jackrugile.com/jrumble/">jRumble</a>.<br>Rewritten for usage in Webkit based (mobile) browser.</p>
+    
+    <nav>
+      <ul>
+        <li><a href="#plugin">The Plugin</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#examples">Examples</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <section id="content">
 
-    <div class="download">
-      <a href="http://github.com/max-power/Rumble/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/max-power/Rumble/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
+  
+    <section id="plugin">
+      <h2>The Plugin</h2>
+      <p>Rumble is a Zepto plugin that rumbles, vibrates, shakes, and rotates any element you choose. It's great to use as a hover effect or a way to direct attention to an element. You can control the X, Y, and rotation range, the speed, and event trigger for the rumble.</p>
+      <p class="note">Note: Rumble will work only in Webkit based browsers.</p>
+      
+      <h3>Authors</h3>
+      <p>
+        Jack Rugile (jackrugile@gmail.com)
+        <br/>Max Power
+      </p>
 
-    <h1><a href="http://github.com/max-power/Rumble">Rumble</a>
-      <span class="small">by <a href="http://github.com/max-power">max-power</a></span></h1>
+      <h3>Download</h3>
+      <p>
+        You can download this project in either
+        <a href="http://github.com/max-power/Rumble/zipball/master">zip</a> or
+        <a href="http://github.com/max-power/Rumble/tarball/master">tar</a> formats.
+      </p>
+      <p>
+        You can also clone the project with <a href="http://git-scm.com">Git</a>
+        by running:
+        <pre>$ git clone git://github.com/max-power/Rumble</pre>
+      </p>
 
-    <div class="description">
-      Rumble is a jQuery/Zepto plugin that rumbles, vibrates, shakes, and rotates any element you choose. It's great to use as a hover effect or a way to direct attention to an element. You can control the X, Y, and rotation range, the speed, and event trigger for the rumble. It is based on jRumble by Jack Rugile (http://jackrugile.com).
-    </div>
+      <p>
+        Get the source code on GitHub: <a href="http://github.com/max-power/Rumble">max-power/Rumble</a>
+      </p>
+      
+    </section>
+  
+    <section id="usage">
+      <h2>Usage</h2>
+      <h3>Include Zepto and the Rumble plugin.</h3>
+      <pre>&lt;script type="text/javascript" src="javascripts/zepto.min.js">&lt;/script>
+&lt;script type="text/javascript" src="javascripts/rumble.min.js">&lt;/script></pre>
+    
+      <h3>Reference Rumble on a Selector</h3>
+      <p>You can do this in a script tag within your HTML or through an external Javascript file.</p>
+      <pre>$(document).ready(function(){
+  $('#my-rumble-div').rumble();
+});</pre>
+      <p>You can pass some options:</p>
+      <pre>$(document).ready(function(){
+  $('h1,h2,li').rumble({
+    x: 10,      // X offset
+    y: 5,       // Y offset
+    a: 20,      // Rotation angle
+    speed: 30,  // animation speed in ms
+    on: 'hold'  // when the rumble will start: 'hover', 'hold', 'toggle', 'constant'
+  });
+});</pre>
+    <section>
+  
+    <section id="examples">
+      <h2>Examples</h2>
 
-    <h2>Authors</h2>
-<p>Jack Rugile (jackrugile@gmail.com)<br/>Max Power<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Max Power (kevin.melchert@gmail.com)<br/>      </p>
+      <section>
+        <h3>Ranges</h3>
+        <ul>
+          <li>
+            x:2,y:2,a:1
+            <div id="range1" class="box">1</div>
+          </li>
+          <li>x:10,y:10,a:4<div id="range2" class="box">2</div></li>
+          <li>x:4,y:0,a:0<div id="range3" class="box">3</div></li>
+          <li>x:0,y:0,a:5<div id="range4" class="box">4</div></li>
+        </ul>
+      </section>
+    
+      <section>
+        <h3>Speed</h3>
+        <ul>
+          <li>0<div id="speed1" class="box">1</div></li>
+          <li>50<div id="speed2" class="box">2</div></li>
+          <li>100<div id="speed3" class="box">3</div></li>
+          <li>200<div id="speed4" class="box">4</div></li>
+        </ul>
+      </section>
+    
+      <section>
+        <h3>Event Types</h3>
+        <ul>
+          <li>hover<div id="event1" class="box">1</div></li>
+          <li>hold<div id="event2" class="box">2</div></li>
+          <li>toggle<div id="event3" class="box">3</div></li>
+          <li>constant<div id="event4" class="box">4</div></li>
+        </ul>
+      </section>
+    
+      <section>
+        <h3>Keeps predefined Translation</h3>
+        <ul>
+          <li><div id="special1" class="special box">1</div></li>
+          <li><div id="special2" class="special box">2</div></li>
+          <li><div id="special3" class="special box">3</div></li>
+          <li><div id="special4" class="special box">4</div></li>
+        </ul>
+      </section>
 
+    </section>
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/max-power/Rumble/zipball/master">zip</a> or
-      <a href="http://github.com/max-power/Rumble/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/max-power/Rumble</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/max-power/Rumble">max-power/Rumble</a>
-    </div>
-
-  </div>
-
+  </section>
   
 </body>
 </html>
