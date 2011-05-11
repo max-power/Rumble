@@ -9,7 +9,7 @@ Usage
 1. Include jQuery or Zepto and the rumble.js file in your document
 2. Apply jRumble with a selector:
 
-      $('#my-rumble-object').rumble();
+    $('#my-rumble-object').rumble();
 
 
 Options
