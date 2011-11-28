@@ -9,7 +9,7 @@
       switch(options.on) {
         case 'hover':  self.bind('mouseover touchstart', start).bind('mouseout mouseleave touchend', stop); break;
         case 'hold':   self.bind('mousedown touchstart', start).bind('mouseup mouseout mouseleave touchend', stop); break;
-        case 'toggle': self.bind('click', function(){ tick ? stop() : start() }); break;
+        case 'toggle': self.bind('click touchend', function(){ tick ? stop() : start() }); break;
         default: start();
       }
       function start() {
@@ -30,4 +30,4 @@
       }
     });
   }
-})(this.jQuery || this.Zepto);
+})(window.jQuery || window.Zepto);
